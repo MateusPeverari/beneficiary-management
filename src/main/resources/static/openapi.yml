@@ -1,0 +1,197 @@
+openapi: 3.0.1
+info:
+  title: Beneficiary Management API
+  description: API para gerenciar beneficiários e seus documentos.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /beneficiaries:
+    post:
+      summary: Cadastrar um beneficiário junto com seus documentos
+      requestBody:
+        $ref: '#/components/requestBodies/CreateBeneficiaryRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/BeneficiaryCreated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    get:
+      summary: Listar todos os beneficiários cadastrados
+      responses:
+        '200':
+          $ref: '#/components/responses/BeneficiaryList'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /beneficiaries/{beneficiaryId}/documents:
+    get:
+      summary: Listar todos os documentos de um beneficiário a partir de seu id
+      parameters:
+        - name: beneficiaryId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/DocumentList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /beneficiaries/{beneficiaryId}:
+    put:
+      summary: Atualizar os dados cadastrais de um beneficiário
+      parameters:
+        - name: beneficiaryId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateBeneficiaryRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/BeneficiaryUpdated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Remover um beneficiário
+      parameters:
+        - name: beneficiaryId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/BeneficiaryDeleted'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  requestBodies:
+    CreateBeneficiaryRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BeneficiaryRequest'
+    UpdateBeneficiaryRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BeneficiaryRequest'
+
+  responses:
+    BeneficiaryCreated:
+      description: Beneficiário cadastrado com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Beneficiary'
+    BeneficiaryUpdated:
+      description: Dados do beneficiário atualizados com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Beneficiary'
+    BeneficiaryDeleted:
+      description: Beneficiário removido com sucesso
+    BeneficiaryList:
+      description: Lista de beneficiários
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/BeneficiarySummary'
+    DocumentList:
+      description: Lista de documentos
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Document'
+    BadRequest:
+      description: Requisição inválida
+    NotFound:
+      description: Beneficiário não encontrado
+    InternalServerError:
+      description: Erro interno do servidor
+
+  schemas:
+    BeneficiaryRequest:
+      type: object
+      properties:
+        nome:
+          type: string
+        telefone:
+          type: string
+        dataNascimento:
+          type: string
+          format: date
+        documentos:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentRequest'
+      required:
+        - nome
+        - telefone
+        - dataNascimento
+        - documentos
+    Beneficiary:
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+        telefone:
+          type: string
+        dataNascimento:
+          type: string
+          format: date
+        documentos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+    BeneficiarySummary:
+      type: object
+      properties:
+        id:
+          type: string
+        nome:
+          type: string
+    DocumentRequest:
+      type: object
+      properties:
+        tipoDocumento:
+          type: string
+        descricao:
+          type: string
+      required:
+        - tipoDocumento
+        - descricao
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+        tipoDocumento:
+          type: string
+        descricao:
+          type: string
+      required:
+        - tipoDocumento
+        - descricao
