@@ -3,6 +3,7 @@ package com.health.beneficiary.infrastructure.output.customexception;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.health.beneficiary.domain.exception.BeneficiaryErrors;
+import com.health.beneficiary.domain.exception.BeneficiaryException;
 import com.health.beneficiary.infrastructure.adapters.data.ErrorResponse;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -56,7 +57,7 @@ public class CustomExceptionAdapter extends ResponseEntityExceptionHandler {
                                                                 WebRequest request) {
     log.warn(HANDLING_EXCEPTION_MESSAGE, ex.getMessage());
 
-    List<String> errors = new ArrayList<>();
+    List<String> errors;
 
     try {
       InvalidFormatException exception = (InvalidFormatException) ex.getCause();
@@ -80,7 +81,7 @@ public class CustomExceptionAdapter extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(Exception.class)
-  public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
+  public final ResponseEntity<Object> handleAllExceptions(Exception ex) {
     log.warn(HANDLING_EXCEPTION_MESSAGE, ex.getMessage());
 
     List<String> messageList = Arrays.asList(ex.getMessage());
@@ -93,6 +94,19 @@ public class CustomExceptionAdapter extends ResponseEntityExceptionHandler {
 
     log.error("Generic Error: {}", exceptionResponse);
     return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @ExceptionHandler(BeneficiaryException.class)
+  public final ResponseEntity<Object> handleUserException(BeneficiaryException ex) {
+    log.warn(HANDLING_EXCEPTION_MESSAGE, ex.getBeneficiaryErrors().getMessage());
+
+    ErrorResponse exceptionResponse = new ErrorResponse();
+
+    exceptionResponse.setCode(ex.getBeneficiaryErrors().getCode());
+    exceptionResponse.setMessage(ex.getBeneficiaryErrors().getMessage());
+    exceptionResponse.setReleaseAt(LocalDateTime.now(ZoneId.of("UTC")));
+    return new ResponseEntity<>(exceptionResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+
   }
 
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class Document {
   private UUID id;
+  private UUID beneficiaryId;
   private String tipoDocumento;
   private String descricao;
   private LocalDateTime dataInclusao;

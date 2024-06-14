@@ -6,7 +6,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface PersistenceMapper {
+public interface BeneficiaryPersistenceMapper {
   BeneficiaryEntity toBeneficiaryEntity(Beneficiary beneficiary);
 
   Beneficiary toBeneficiary(BeneficiaryEntity beneficiaryEntity);

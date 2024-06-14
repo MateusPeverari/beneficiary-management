@@ -7,4 +7,10 @@ public interface BeneficiaryInputPort {
   Beneficiary createBeneficiary(Beneficiary beneficiary);
 
   List<Beneficiary> listAllBeneficiaries();
+
+  Beneficiary updateBeneficiary(Beneficiary beneficiary, String beneficiaryId);
+
+  void deleteBeneficiary(Beneficiary beneficiary);
+
+  Beneficiary findBeneficiaryById(String beneficiaryId);
 }
