@@ -22,8 +22,9 @@ public class BeanConfiguration {
   }
 
   @Bean
-  public BeneficiaryPersistenceAdapter eventPersistenceAdapter(BeneficiaryRepository beneficiaryRepository,
-                                                               BeneficiaryPersistenceMapper beneficiaryPersistenceMapper) {
+  public BeneficiaryPersistenceAdapter eventPersistenceAdapter(
+      BeneficiaryRepository beneficiaryRepository,
+      BeneficiaryPersistenceMapper beneficiaryPersistenceMapper) {
     return new BeneficiaryPersistenceAdapter(beneficiaryRepository, beneficiaryPersistenceMapper);
   }
 
@@ -34,7 +35,10 @@ public class BeanConfiguration {
   }
 
   @Bean
-  public DocumentPersistenceAdapter documentPersistenceAdapter(DocumentRepository documentRepository, DocumentPersistenceMapper documentPersistenceMapper) {
-    return new DocumentPersistenceAdapter(documentRepository, documentPersistenceMapper);
+  public DocumentPersistenceAdapter documentPersistenceAdapter(
+      DocumentRepository documentRepository, DocumentPersistenceMapper documentPersistenceMapper,
+      BeneficiaryPersistencePort beneficiaryPersistencePort) {
+    return new DocumentPersistenceAdapter(documentRepository, documentPersistenceMapper,
+        beneficiaryPersistencePort);
   }
 }
