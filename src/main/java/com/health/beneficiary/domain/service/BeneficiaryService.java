@@ -21,4 +21,10 @@ public class BeneficiaryService implements BeneficiaryInputPort {
   public List<Beneficiary> listAllBeneficiaries() {
     return beneficiaryPersistencePort.listAll();
   }
+
+  @Override
+  public Beneficiary updateBeneficiary(Beneficiary beneficiary, String beneficiaryId) {
+    log.info("Update beneficiary {}", beneficiaryId);
+    return beneficiaryPersistencePort.update(beneficiary, beneficiaryId);
+  }
 }

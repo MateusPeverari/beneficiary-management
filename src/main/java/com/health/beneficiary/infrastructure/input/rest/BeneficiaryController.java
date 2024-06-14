@@ -5,8 +5,10 @@ import com.health.beneficiary.infrastructure.adapters.BeneficiariesApi;
 import com.health.beneficiary.infrastructure.adapters.data.BeneficiaryRequest;
 import com.health.beneficiary.infrastructure.adapters.data.BeneficiaryResponse;
 import com.health.beneficiary.infrastructure.adapters.data.BeneficiarySummary;
+import com.health.beneficiary.infrastructure.adapters.data.UpdateBeneficiaryRequest;
 import com.health.beneficiary.infrastructure.input.rest.mapper.BeneficiaryRestMapper;
 import java.util.List;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -41,5 +43,18 @@ public class BeneficiaryController implements BeneficiariesApi {
     var beneficiariesResponse = beneficiaryRestMapper.toBeneficiarySummary(beneficiariesList);
 
     return ResponseEntity.ok(beneficiariesResponse);
+  }
+
+  @Override
+  public ResponseEntity<BeneficiaryResponse> updateBeneficiary(String beneficiaryId,
+                                                               UpdateBeneficiaryRequest updateBeneficiaryRequest) {
+    log.info("Request to update beneficiary: {}", beneficiaryId);
+    var beneficiaryUpdated = beneficiaryInputPort.updateBeneficiary(
+        beneficiaryRestMapper.toBeneficiary(updateBeneficiaryRequest), beneficiaryId);
+
+    var beneficiaryResponse = beneficiaryRestMapper.toBeneficiaryResponse(beneficiaryUpdated);
+    log.info("Beneficiary created. Sending response: {}", beneficiaryResponse);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(beneficiaryResponse);
   }
 }

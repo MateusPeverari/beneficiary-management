@@ -6,6 +6,7 @@ import com.health.beneficiary.domain.exception.BeneficiaryException;
 import com.health.beneficiary.domain.model.Document;
 import com.health.beneficiary.infrastructure.output.persistence.mapper.DocumentPersistenceMapper;
 import com.health.beneficiary.infrastructure.output.persistence.repository.DocumentRepository;
+import com.health.beneficiary.utils.Convertor;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,9 @@ public class DocumentPersistenceAdapter implements DocumentPersistencePort {
 
   @Override
   public List<Document> listDocumentByBeneficiary(String beneficiaryId) {
+    //TODO IMPROVE BENEFICIARY NOT FOUND / NO DOCUMENTS
     log.info("Searching documents for beneficiary {}", beneficiaryId);
-    var beneficiaryUuid = convertToUuid(beneficiaryId);
+    var beneficiaryUuid = Convertor.convertToUuid(beneficiaryId);
     var documentEntityList = documentRepository.findAllByBeneficiaryId(beneficiaryUuid);
 
     if (documentEntityList.isEmpty()) {
@@ -32,13 +34,4 @@ public class DocumentPersistenceAdapter implements DocumentPersistencePort {
 
     return documentPersistenceMapper.toDocumentList(documentEntityList);
   }
-
-  private UUID convertToUuid(String beneficiaryId) {
-    try {
-      return UUID.fromString(beneficiaryId);
-    } catch (IllegalArgumentException e) {
-      throw  new BeneficiaryException(BeneficiaryErrors.WRONG_ID_FORMAT);
-    }
-  }
-
 }

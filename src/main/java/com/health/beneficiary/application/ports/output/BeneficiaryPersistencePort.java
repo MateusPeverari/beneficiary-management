@@ -7,4 +7,8 @@ public interface BeneficiaryPersistencePort {
   Beneficiary save(Beneficiary beneficiary);
 
   List<Beneficiary> listAll();
+
+  Beneficiary findById(String beneficiaryId);
+
+  Beneficiary update(Beneficiary beneficiary, String beneficiaryId);
 }

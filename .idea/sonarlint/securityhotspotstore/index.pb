@@ -54,3 +54,7 @@ isrc/main/java/com/health/beneficiary/infrastructure/output/persistence/reposito
 Vsrc/main/java/com/health/beneficiary/infrastructure/input/rest/DocumentController.java,2/5/2559b7705f0cde5687dfa95b27ae327fd4977793
 
 ]src/main/java/com/health/beneficiary/infrastructure/input/rest/mapper/DocumentRestMapper.java,f/a/fa736482ee3ac34cd2397ac426c0c01b41eb7754
+i
+9src/main/java/com/health/beneficiary/utils/Validator.java,e/e/ee3ddb559a50015a6c28fd0bbde2d7270ed42c92
+i
+9src/main/java/com/health/beneficiary/utils/Convertor.java,6/8/682e1e2452f04841aedcb71ce917f7272c25c1b8

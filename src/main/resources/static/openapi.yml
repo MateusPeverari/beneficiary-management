@@ -168,7 +168,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BeneficiaryRequest'
+            $ref: '#/components/schemas/UpdateBeneficiaryRequest'
 
   responses:
     BeneficiaryDeleted:
@@ -211,6 +211,21 @@ components:
         - telefone
         - dataNascimento
         - documentos
+    UpdateBeneficiaryRequest:
+      type: object
+      properties:
+        nome:
+          type: string
+        telefone:
+          type: string
+        dataNascimento:
+          type: string
+          format: date
+          example: "1999-03-24"
+      required:
+        - nome
+        - telefone
+        - dataNascimento
     BeneficiaryResponse:
       type: object
       properties:

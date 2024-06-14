@@ -4,6 +4,7 @@ import com.health.beneficiary.domain.model.Beneficiary;
 import com.health.beneficiary.infrastructure.adapters.data.BeneficiaryRequest;
 import com.health.beneficiary.infrastructure.adapters.data.BeneficiaryResponse;
 import com.health.beneficiary.infrastructure.adapters.data.BeneficiarySummary;
+import com.health.beneficiary.infrastructure.adapters.data.UpdateBeneficiaryRequest;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -20,4 +21,6 @@ public interface BeneficiaryRestMapper {
 
   @Mapping(source = "beneficiaryId", target = "id")
   BeneficiarySummary toBeneficiarySummary(Beneficiary beneficiary);
+
+  Beneficiary toBeneficiary(UpdateBeneficiaryRequest updateBeneficiaryRequest);
 }
