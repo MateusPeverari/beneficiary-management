@@ -4,9 +4,12 @@ import com.health.beneficiary.application.ports.input.BeneficiaryInputPort;
 import com.health.beneficiary.infrastructure.adapters.BeneficiariesApi;
 import com.health.beneficiary.infrastructure.adapters.data.BeneficiaryRequest;
 import com.health.beneficiary.infrastructure.adapters.data.BeneficiaryResponse;
+import com.health.beneficiary.infrastructure.adapters.data.BeneficiarySummary;
 import com.health.beneficiary.infrastructure.input.rest.mapper.BeneficiaryRestMapper;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +30,16 @@ public class BeneficiaryController implements BeneficiariesApi {
     var beneficiaryResponse = beneficiaryRestMapper.toBeneficiaryResponse(beneficiaryCreated);
     log.info("Beneficiary created. Sending response: {}", beneficiaryResponse);
 
-    return ResponseEntity.ok(beneficiaryResponse);
+    return ResponseEntity.status(HttpStatus.CREATED).body(beneficiaryResponse);
+  }
+
+  @Override
+  public ResponseEntity<List<BeneficiarySummary>> listAllBeneficiaries() {
+    log.info("Request to list all beneficiaries");
+    var beneficiariesList = beneficiaryInputPort.listAllBeneficiaries();
+
+    var beneficiariesResponse = beneficiaryRestMapper.toBeneficiarySummary(beneficiariesList);
+
+    return ResponseEntity.ok(beneficiariesResponse);
   }
 }

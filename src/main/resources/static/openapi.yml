@@ -38,6 +38,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     get:
       summary: Listar todos os beneficiários cadastrados
+      operationId: listAllBeneficiaries
       responses:
         '200':
           $ref: '#/components/responses/BeneficiaryList'
@@ -259,7 +260,6 @@ components:
       required:
         - tipoDocumento
         - descricao
-
     ErrorResponse:
       type: object
       properties:
