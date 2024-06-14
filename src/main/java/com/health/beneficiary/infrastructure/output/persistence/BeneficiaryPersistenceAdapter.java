@@ -1,8 +1,8 @@
 package com.health.beneficiary.infrastructure.output.persistence;
 
-import com.health.beneficiary.application.ports.output.PersistenceOutputPort;
+import com.health.beneficiary.application.ports.output.BeneficiaryPersistencePort;
 import com.health.beneficiary.domain.model.Beneficiary;
-import com.health.beneficiary.infrastructure.output.persistence.mapper.PersistenceMapper;
+import com.health.beneficiary.infrastructure.output.persistence.mapper.BeneficiaryPersistenceMapper;
 import com.health.beneficiary.infrastructure.output.persistence.repository.BeneficiaryRepository;
 import java.util.List;
 import java.util.UUID;
@@ -11,13 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-public class PersistenceAdapter implements PersistenceOutputPort {
+public class BeneficiaryPersistenceAdapter implements BeneficiaryPersistencePort {
   private final BeneficiaryRepository beneficiaryRepository;
-  private final PersistenceMapper persistenceMapper;
+  private final BeneficiaryPersistenceMapper beneficiaryPersistenceMapper;
 
   @Override
   public Beneficiary save(Beneficiary beneficiary) {
-    final var beneficiaryEntity = persistenceMapper.toBeneficiaryEntity(beneficiary);
+    final var beneficiaryEntity = beneficiaryPersistenceMapper.toBeneficiaryEntity(beneficiary);
     beneficiaryEntity.setBeneficiaryId(UUID.randomUUID());
 
     var documents = beneficiaryEntity.getDocumentos();
@@ -25,7 +25,7 @@ public class PersistenceAdapter implements PersistenceOutputPort {
 
     var savedBeneficiaryEntity = beneficiaryRepository.save(beneficiaryEntity);
     log.info("Saved beneficiary {}", beneficiary);
-    return persistenceMapper.toBeneficiary(savedBeneficiaryEntity);
+    return beneficiaryPersistenceMapper.toBeneficiary(savedBeneficiaryEntity);
   }
 
   @Override
@@ -34,6 +34,6 @@ public class PersistenceAdapter implements PersistenceOutputPort {
     var beneficiaryList = beneficiaryRepository.findAll();
     log.info("Listing {} beneficiaries.", beneficiaryList.size());
 
-    return persistenceMapper.toBeneficiaryList(beneficiaryList);
+    return beneficiaryPersistenceMapper.toBeneficiaryList(beneficiaryList);
   }
 }

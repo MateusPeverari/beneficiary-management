@@ -59,9 +59,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /beneficiaries/{beneficiaryId}/documents:
+  /documents/{beneficiaryId}:
     get:
-      operationId: getBeneficiary
+      operationId: getBeneficiaryDocuments
       summary: Listar todos os documentos de um beneficiário a partir de seu id
       parameters:
         - name: beneficiaryId
