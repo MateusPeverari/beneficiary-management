@@ -27,4 +27,16 @@ public class BeneficiaryService implements BeneficiaryInputPort {
     log.info("Update beneficiary {}", beneficiaryId);
     return beneficiaryPersistencePort.update(beneficiary, beneficiaryId);
   }
+
+  @Override
+  public void deleteBeneficiary(Beneficiary beneficiary) {
+    log.info("Delete beneficiary {}", beneficiary);
+    beneficiaryPersistencePort.delete(beneficiary);
+  }
+
+  @Override
+  public Beneficiary findBeneficiaryById(String beneficiaryId) {
+    log.info("Search beneficiary {}", beneficiaryId);
+    return beneficiaryPersistencePort.findById(beneficiaryId);
+  }
 }

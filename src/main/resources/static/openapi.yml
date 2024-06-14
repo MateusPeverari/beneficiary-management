@@ -173,6 +173,10 @@ components:
   responses:
     BeneficiaryDeleted:
       description: Beneficiário removido com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeleteResponse'
     BeneficiaryList:
       description: Lista de beneficiários
       content:
@@ -189,7 +193,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Document'
-
   schemas:
     BeneficiaryRequest:
       type: object
@@ -290,3 +293,13 @@ components:
           type: string
           format: date-time
           example: '2023-01-01T18:00:01Z'
+    DeleteResponse:
+      type: object
+      properties:
+        deletedAt:
+          type: string
+          format: date-time
+          description: date and time the record was deleted, in UTC standard
+          example: '2023-01-01T18:00:01Z'
+        message:
+          type: string

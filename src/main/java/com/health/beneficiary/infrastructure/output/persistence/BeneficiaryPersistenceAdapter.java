@@ -64,6 +64,11 @@ public class BeneficiaryPersistenceAdapter implements BeneficiaryPersistencePort
     return beneficiaryPersistenceMapper.toBeneficiary(beneficiaryEntity);
   }
 
+  @Override
+  public void delete(Beneficiary beneficiary) {
+    beneficiaryRepository.delete(beneficiaryPersistenceMapper.toBeneficiaryEntity(beneficiary));
+  }
+
   private void mergeBeneficiary(Beneficiary beneficiary, Beneficiary beneficiarySaved) {
     beneficiary.setBeneficiaryId(beneficiarySaved.getBeneficiaryId());
     beneficiary.setDataInclusao(beneficiarySaved.getDataInclusao());

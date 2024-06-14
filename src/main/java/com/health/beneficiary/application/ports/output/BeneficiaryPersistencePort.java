@@ -11,4 +11,6 @@ public interface BeneficiaryPersistencePort {
   Beneficiary findById(String beneficiaryId);
 
   Beneficiary update(Beneficiary beneficiary, String beneficiaryId);
+
+  void delete(Beneficiary beneficiary);
 }
