@@ -8,24 +8,59 @@ servers:
 paths:
   /beneficiaries:
     post:
+      operationId: createBeneficiary
       summary: Cadastrar um beneficiário junto com seus documentos
       requestBody:
         $ref: '#/components/requestBodies/CreateBeneficiaryRequest'
       responses:
-        '201':
-          $ref: '#/components/responses/BeneficiaryCreated'
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeneficiaryResponse'
         '400':
-          $ref: '#/components/responses/BadRequest'
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: BENEFICIARY-SERVICE-9999
+                message: Error response message, related to the validation or generic errors.
+                details: []
+                date: 2024-06-13T18:00:01Z
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     get:
       summary: Listar todos os beneficiários cadastrados
       responses:
         '200':
           $ref: '#/components/responses/BeneficiaryList'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: BENEFICIARY-SERVICE-9999
+                message: Error response message, related to the validation or generic errors.
+                details: []
+                date: 2024-06-13T18:00:01Z
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /beneficiaries/{beneficiaryId}/documents:
     get:
+      operationId: getBeneficiary
       summary: Listar todos os documentos de um beneficiário a partir de seu id
       parameters:
         - name: beneficiaryId
@@ -36,13 +71,27 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/DocumentList'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: BENEFICIARY-SERVICE-9999
+                message: Error response message, related to the validation or generic errors.
+                details: []
+                date: 2024-06-13T18:00:01Z
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /beneficiaries/{beneficiaryId}:
     put:
+      operationId: updateBeneficiary
       summary: Atualizar os dados cadastrais de um beneficiário
       parameters:
         - name: beneficiaryId
@@ -54,14 +103,30 @@ paths:
         $ref: '#/components/requestBodies/UpdateBeneficiaryRequest'
       responses:
         '200':
-          $ref: '#/components/responses/BeneficiaryUpdated'
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeneficiaryResponse'
         '400':
-          $ref: '#/components/responses/BadRequest'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: BENEFICIARY-SERVICE-9999
+                message: Error response message, related to the validation or generic errors.
+                details: []
+                date: 2024-06-13T18:00:01Z
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     delete:
+      operationId: deleteBeneficiary
       summary: Remover um beneficiário
       parameters:
         - name: beneficiaryId
@@ -72,11 +137,23 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/BeneficiaryDeleted'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: BENEFICIARY-SERVICE-9999
+                message: Error response message, related to the validation or generic errors.
+                details: []
+                date: 2024-06-13T18:00:01Z
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   requestBodies:
     CreateBeneficiaryRequest:
@@ -93,18 +170,6 @@ components:
             $ref: '#/components/schemas/BeneficiaryRequest'
 
   responses:
-    BeneficiaryCreated:
-      description: Beneficiário cadastrado com sucesso
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Beneficiary'
-    BeneficiaryUpdated:
-      description: Dados do beneficiário atualizados com sucesso
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Beneficiary'
     BeneficiaryDeleted:
       description: Beneficiário removido com sucesso
     BeneficiaryList:
@@ -123,12 +188,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Document'
-    BadRequest:
-      description: Requisição inválida
-    NotFound:
-      description: Beneficiário não encontrado
-    InternalServerError:
-      description: Erro interno do servidor
 
   schemas:
     BeneficiaryRequest:
@@ -141,6 +200,7 @@ components:
         dataNascimento:
           type: string
           format: date
+          example: "1999-03-24"
         documentos:
           type: array
           items:
@@ -150,10 +210,14 @@ components:
         - telefone
         - dataNascimento
         - documentos
-    Beneficiary:
+    BeneficiaryResponse:
       type: object
       properties:
         id:
+          type: string
+        dataInclusao:
+          type: string
+        dataAtualizacao:
           type: string
         nome:
           type: string
@@ -195,3 +259,19 @@ components:
       required:
         - tipoDocumento
         - descricao
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+        releaseAt:
+          type: string
+          format: date-time
+          example: '2023-01-01T18:00:01Z'

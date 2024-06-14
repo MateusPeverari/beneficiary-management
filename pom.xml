@@ -15,7 +15,7 @@
     </parent>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
         <spring-cloud-azure.version>5.5.0</spring-cloud-azure.version>
         <spring-cloud.version>2023.0.2</spring-cloud.version>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
@@ -225,11 +225,11 @@
               </configOptions>
 
               <typeMappings>
-                <typeMapping>OffsetDateTime=ZonedDateTime</typeMapping>
+                <typeMapping>OffsetDateTime=LocalDateTime</typeMapping>
               </typeMappings>
 
               <importMappings>
-                <importMapping>java.time.OffsetDateTime=java.time.ZonedDateTime</importMapping>
+                <importMapping>java.time.OffsetDateTime=java.time.LocalDateTime</importMapping>
               </importMappings>
 
             </configuration>
