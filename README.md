@@ -35,7 +35,7 @@ Este projeto é uma API para gerenciar beneficiários e seus documentos, desenvo
 - **Responses:**
     - `201`: Beneficiário cadastrado com sucesso
     - `400`: Requisição inválida
-    - `400`: Entidade não processável
+    - `422`: Entidade não processável
 
 ## Listar Todos os Beneficiários
 - **URL:** /beneficiaries
@@ -44,7 +44,7 @@ Este projeto é uma API para gerenciar beneficiários e seus documentos, desenvo
 - **Responses:**
   - `201`: Beneficiário cadastrado com sucesso
   - `400`: Requisição inválida
-  - `400`: Entidade não processável
+  - `422`: Entidade não processável
 
 ## Listar Documentos de um Beneficiário
 - **URL:** /beneficiaries/{beneficiaryId}/documents
@@ -53,7 +53,7 @@ Este projeto é uma API para gerenciar beneficiários e seus documentos, desenvo
 - **Responses:**
   - `201`: Beneficiário cadastrado com sucesso
   - `400`: Requisição inválida
-  - `400`: Entidade não processável
+  - `422`: Entidade não processável
 
 ## Atualizar Dados de um Beneficiário
 - **URL:** /beneficiaries/{beneficiaryId}
@@ -76,7 +76,7 @@ Este projeto é uma API para gerenciar beneficiários e seus documentos, desenvo
 - **Responses:**
   - `201`: Beneficiário cadastrado com sucesso
   - `400`: Requisição inválida
-  - `400`: Entidade não processável
+  - `422`: Entidade não processável
 
 # Remover um Beneficiário
 - **URL:** /beneficiaries/{beneficiaryId}
@@ -85,7 +85,7 @@ Este projeto é uma API para gerenciar beneficiários e seus documentos, desenvo
 - **Responses:**
   - `201`: Beneficiário cadastrado com sucesso
   - `400`: Requisição inválida
-  - `400`: Entidade não processável
+  - `422`: Entidade não processável
 
 # Arquitetura Hexagonal
 O projeto foi desenvolvido utilizando a Arquitetura Hexagonal (também conhecida como Arquitetura de Portas e Adaptadores), que promove uma separação clara entre a lógica de negócios e a infraestrutura.
